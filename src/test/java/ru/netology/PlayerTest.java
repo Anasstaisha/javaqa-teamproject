@@ -24,12 +24,67 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldPlayUninstalledGame (){
-        player.installGame(game1);
+    public void shouldSumGenreIfNoGame() {
+        int expected = 0;
+        int actual = player.sumGenre(game1.getGenre());
+        assertEquals(expected, actual);
+    }
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            player.play(game2, 6);
-        });
+    @Test
+    public void shouldSumGenrePositive() {
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 6);
+        player.play(game2, 16);
+        player.play(game3, 6);
+
+        int expected = 22;
+        int actual = player.sumGenre(game2.getGenre());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSumGenreIfNotFindGenre() {
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 6);
+        player.play(game2, 16);
+        player.play(game3, 6);
+
+        int expected = 0;
+        int actual = player.sumGenre("Genre 3");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSumGenreIfNull() {
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 6);
+        player.play(game2, 16);
+        player.play(game3, 6);
+
+        int expected = 0;
+        int actual = player.sumGenre(null);
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldPlayerByGenreIfOneGame() {
+        player.installGame(game1);
+        player.play(game1, 6);
+
+        Assertions.assertEquals(game1, player.mostPlayerByGenre(game1.getGenre()));
+    }
+
+    @Test
+    public void shouldPlayerByGenreIfNoGame() {
+
+        Assertions.assertEquals(null, player.mostPlayerByGenre(game1.getGenre()));
     }
 
     @Test
@@ -41,11 +96,23 @@ public class PlayerTest {
         player.play(game2, 16);
         player.play(game3, 6);
 
-        Assertions.assertEquals(game2, player.mostPlayerByGenre("Genre 2"));
+        Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
     }
 
+   /* @Test
+    public void shouldPlayerByGenreIfGamesEquals() {
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 6);
+        player.play(game2, 16);
+        player.play(game3, 16);
+
+        Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
+    }*/
+
     @Test
-    public void shouldPlayerByGenreNoExist() {
+    public void shouldPlayerByGenreIfNotFindGenre() {
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
@@ -57,7 +124,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldPlayerByGenreNull() {
+    public void shouldPlayerByGenreIfNull() {
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
@@ -66,5 +133,14 @@ public class PlayerTest {
         player.play(game3, 6);
 
         Assertions.assertEquals(null, player.mostPlayerByGenre(null));
+    }
+
+    @Test
+    public void shouldPlayIfNoGame (){
+        player.installGame(game1);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            player.play(game2, 6);
+        });
     }
 }
