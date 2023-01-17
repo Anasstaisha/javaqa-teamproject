@@ -14,6 +14,24 @@ public class PlayerTest {
     private Player player = new Player("Petya");
 
     @Test
+    public void shouldPlay (){
+        player.installGame(game1);
+
+        int expected = 3;
+        int actual = player.play(game1, 3);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPlayIfNoGame (){
+        player.installGame(game1);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            player.play(game2, 6);
+        });
+    }
+
+    @Test
     public void shouldSumGenreIfOneGame() {
         player.installGame(game1);
         player.play(game1, 3);
@@ -135,12 +153,4 @@ public class PlayerTest {
         Assertions.assertEquals(null, player.mostPlayerByGenre(null));
     }
 
-    @Test
-    public void shouldPlayIfNoGame (){
-        player.installGame(game1);
-
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            player.play(game2, 6);
-        });
-    }
 }
