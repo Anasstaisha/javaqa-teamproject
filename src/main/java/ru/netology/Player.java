@@ -83,7 +83,7 @@ public class Player {
                 }
             }
         }
-                return bestGame;
+        return bestGame;
     }
 }
 
