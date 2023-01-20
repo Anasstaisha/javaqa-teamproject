@@ -20,9 +20,12 @@ public class GameStore {
      * Каждый объект игры помнит объект каталога, которому она принадлежит
      */
     public Game publishGame(String title, String genre) {
-        Game game = new Game(title, genre, this);
-        games.add(game);
-        return game;
+        if (title != null && genre != null) {
+            Game game = new Game(title, genre, this);
+            games.add(game);
+            return game;
+        }
+        return null;
     }
 
     /**
@@ -35,11 +38,6 @@ public class GameStore {
                 return true;
             }
         }
-        /*for (int i = 1; i < games.size(); i++) {
-            if (games.get(i - 1).equals(game)) {
-                return true;
-            }
-        }*/
         return false;
     }
 
@@ -49,7 +47,7 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
-        if (playerName != null) {
+        if (playerName != null && hours >= 0) {
             if (playedTime.containsKey(playerName)) {
                 playedTime.put(playerName, playedTime.get(playerName) + hours);
             } else {
