@@ -40,6 +40,11 @@ public class Player {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
             playedTime.put(game, playedTime.get(game) + hours);
+            if (hours < 0) {
+                throw new UninstallGameException(
+                        "В игру" + game + "не играли"
+                );
+            }
         } else {
             playedTime.put(game, hours);
             throw new UninstallGameException(
