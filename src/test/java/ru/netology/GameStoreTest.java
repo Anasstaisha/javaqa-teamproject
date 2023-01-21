@@ -29,7 +29,7 @@ public class GameStoreTest {
     }
 
     @Test
-    public void shouldChoosePlayerMostHours() {
+    public void shouldShowPlayerMostHours() {
         store.addPlayTime("Anya", 3);
         store.addPlayTime("Misha", 2);
         store.addPlayTime("Olya", 1);
@@ -67,6 +67,17 @@ public class GameStoreTest {
     }
 
     @Test
+    public void shouldChooseMostTimePlayer() {
+        store.addPlayTime("Misha", 0);
+        store.addPlayTime("Anya", 1);
+
+        String expected = "Anya";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldNullIfNoPlayers() {
         String expected = null;
         String actual = store.getMostPlayer();
@@ -87,10 +98,34 @@ public class GameStoreTest {
     }
 
     @Test
-    public void shouldNotSumPlayedTimeIfNull() {
+    public void shouldSumPlayedTimeIfOnePlayer() {
+        store.addPlayTime("Misha", 2);
+        store.addPlayTime("Misha", 0);
+        store.addPlayTime("Misha", 17);
+
+        int expected = 19;
+        int actual = store.getSumPlayedTime();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotSumPlayedTimeIfNoPlayers() {
         store.addPlayTime(null, 7);
         store.addPlayTime(null, 3);
         store.addPlayTime(null, 10);
+
+        int expected = 0;
+        int actual = store.getSumPlayedTime();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldZeroIfNoPlayedTime() {
+        store.addPlayTime("Anya", 0);
+        store.addPlayTime("Misha", 0);
+        store.addPlayTime("Olya", 0);
 
         int expected = 0;
         int actual = store.getSumPlayedTime();
