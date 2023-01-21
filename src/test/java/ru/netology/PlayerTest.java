@@ -32,6 +32,15 @@ public class PlayerTest {
     }
 
     @Test
+    public void shouldPlayIfHoursNegative (){
+        player.installGame(game1);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            player.play(game1, -6);
+        });
+    }
+
+    @Test
     public void shouldSumGenreIfOneGame() {
         player.installGame(game1);
         player.play(game1, 3);
@@ -117,7 +126,7 @@ public class PlayerTest {
         Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
     }
 
-   /* @Test
+    @Test
     public void shouldPlayerByGenreIfGamesEquals() {
         player.installGame(game1);
         player.installGame(game2);
@@ -127,7 +136,7 @@ public class PlayerTest {
         player.play(game3, 16);
 
         Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
-    }*/
+    }
 
     @Test
     public void shouldPlayerByGenreIfNotFindGenre() {
