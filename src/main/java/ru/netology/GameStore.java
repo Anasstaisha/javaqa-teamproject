@@ -20,9 +20,12 @@ public class GameStore {
      * Каждый объект игры помнит объект каталога, которому она принадлежит
      */
     public Game publishGame(String title, String genre) {
-        Game game = new Game(title, genre, this);
-        games.add(game);
-        return game;
+        if (title != null && genre != null) {
+            Game game = new Game(title, genre, this);
+            games.add(game);
+            return game;
+        }
+        return null;
     }
 
     /**
@@ -30,8 +33,8 @@ public class GameStore {
      * если игра есть и false иначе
      */
     public boolean containsGame(Game game) {
-        for (int i = 1; i < games.size(); i++) {
-            if (games.get(i - 1).equals(game)) {
+        for (Game existGame : games) {
+            if (existGame.equals(game)) {
                 return true;
             }
         }
@@ -44,10 +47,12 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
-        if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
-        } else {
-            playedTime.put(playerName, hours);
+        if (playerName != null && hours >= 0) {
+            if (playedTime.containsKey(playerName)) {
+                playedTime.put(playerName, playedTime.get(playerName) + hours);
+            } else {
+                playedTime.put(playerName, hours);
+            }
         }
     }
 
@@ -56,7 +61,7 @@ public class GameStore {
      * времени. Если игроков нет, то возвращется null
      */
     public String getMostPlayer() {
-        int mostTime = 1;
+        int mostTime = 0;
         String bestPlayer = null;
         for (String playerName : playedTime.keySet()) {
             int playerTime = playedTime.get(playerName);
@@ -73,6 +78,10 @@ public class GameStore {
      * за играми этого каталога
      */
     public int getSumPlayedTime() {
-        return 0;
+        int sum = 0;
+        for (String playerName : playedTime.keySet()) {
+            sum += playedTime.get(playerName);
+        }
+        return sum;
     }
 }
