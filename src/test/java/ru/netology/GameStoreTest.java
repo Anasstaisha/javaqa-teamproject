@@ -17,6 +17,7 @@ public class GameStoreTest {
 
 
     @Test
+
     public void shouldAddGame() {
 
         Assertions.assertTrue(store.containsGame(game2));
@@ -141,6 +142,4 @@ public class GameStoreTest {
 
         Assertions.assertEquals(expected, actual);
     }
-
-
 }
