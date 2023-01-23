@@ -108,18 +108,15 @@ public class PlayerTest {
         player.installGame(game1);
         player.play(game1, 6);
 
-        //List<Game> expected = new ArrayList<>();
-        //expected.add(game1);
-        //List<Game> actual = player.mostPlayerByGenre(game1.getGenre());
-        Game[] expected = {game1};
-        Game[] actual = player.mostPlayerByGenre(game1.getGenre());
-        Assertions.assertArrayEquals(expected, actual);
+        Game expected = game1;
+        Game actual = player.mostPlayerByGenre(game1.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void shouldPlayerByGenreIfNoGameInstall() {
 
-        Assertions.assertArrayEquals(null, player.mostPlayerByGenre(game1.getGenre()));
+        Assertions.assertEquals(null, player.mostPlayerByGenre(game1.getGenre()));
     }
 
     @Test
@@ -131,23 +128,23 @@ public class PlayerTest {
         player.installGame(game3);
         player.play(game3, 6);
 
-        Game[] expected = {game2};
-        Game[] actual = player.mostPlayerByGenre(game2.getGenre());
-        Assertions.assertArrayEquals(expected, actual);
+        Game expected = game2;
+        Game actual = player.mostPlayerByGenre(game2.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void shouldPlayerByGenrePositiveIfNoOneBestGame() {
         player.installGame(game1);
-        player.installGame(game2);
         player.installGame(game3);
+        player.installGame(game2);
         player.play(game1, 6);
-        player.play(game2, 16);
         player.play(game3, 16);
+        player.play(game2, 16);
 
-        Game[] expected = {game2, game3};
-        Game[] actual = player.mostPlayerByGenre(game2.getGenre());
-        Assertions.assertArrayEquals(expected, actual);
+        Game expected = game3;
+        Game actual = player.mostPlayerByGenre(game3.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -155,13 +152,13 @@ public class PlayerTest {
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
-        player.play(game1, 6);
+        player.play(game1, 0);
         player.play(game2, 0);
         player.play(game3, 1);
 
-        Game[] expected = {game3};
-        Game[] actual = player.mostPlayerByGenre(game3.getGenre());
-        Assertions.assertArrayEquals(expected, actual);
+        Game expected = game3;
+        Game actual = player.mostPlayerByGenre(game3.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -173,7 +170,7 @@ public class PlayerTest {
         player.play(game2, 16);
         player.play(game3, 6);
 
-        Assertions.assertArrayEquals(null, player.mostPlayerByGenre("Genre 3"));
+        Assertions.assertEquals(null, player.mostPlayerByGenre("Genre 3"));
     }
 
     @Test
@@ -185,6 +182,6 @@ public class PlayerTest {
         player.play(game2, 16);
         player.play(game3, 6);
 
-        Assertions.assertArrayEquals(null, player.mostPlayerByGenre(null));
+        Assertions.assertEquals(null, player.mostPlayerByGenre(null));
     }
 }
