@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerTest {
 
     private GameStore store = new GameStore();
@@ -14,7 +17,7 @@ public class PlayerTest {
     private Player player = new Player("Petya");
 
     @Test
-    public void shouldPlay (){
+    public void shouldPlay() {
         player.installGame(game1);
 
         int expected = 3;
@@ -23,7 +26,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldPlayIfNoGame (){
+    public void shouldPlayIfNoGame() {
         player.installGame(game1);
 
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -32,7 +35,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldPlayIfHoursNegative (){
+    public void shouldPlayIfHoursNegative() {
         player.installGame(game1);
 
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -82,6 +85,7 @@ public class PlayerTest {
 
         int expected = 0;
         int actual = player.sumGenre("Genre 3");
+
         assertEquals(expected, actual);
     }
 
@@ -101,42 +105,63 @@ public class PlayerTest {
 
 
     @Test
-    public void shouldPlayerByGenreIfOneGame() {
+    public void shouldPlayerByGenreIfOneGameInstall() {
         player.installGame(game1);
         player.play(game1, 6);
 
-        Assertions.assertEquals(game1, player.mostPlayerByGenre(game1.getGenre()));
+        Game expected = game1;
+        Game actual = player.mostPlayerByGenre(game1.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldPlayerByGenreIfNoGame() {
+    public void shouldPlayerByGenreIfNoGameInstall() {
 
         Assertions.assertEquals(null, player.mostPlayerByGenre(game1.getGenre()));
     }
 
     @Test
-    public void shouldPlayerByGenrePositive() {
+    public void shouldPlayerByGenrePositiveIfOneBestGame() {
         player.installGame(game1);
-        player.installGame(game2);
-        player.installGame(game3);
         player.play(game1, 6);
+        player.installGame(game2);
         player.play(game2, 16);
+        player.installGame(game3);
         player.play(game3, 6);
 
-        Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
+        Game expected = game2;
+        Game actual = player.mostPlayerByGenre(game2.getGenre());
+        Assertions.assertEquals(expected, actual);
     }
 
- /*   @Test
-    public void shouldPlayerByGenreIfGamesEquals() {
+    @Test
+    public void shouldPlayerByGenrePositiveIfNoOneBestGame() {
+        player.installGame(game1);
+        player.installGame(game3);
+        player.installGame(game2);
+        player.play(game1, 6);
+        player.play(game3, 16);
+        player.play(game2, 16);
+
+        Game expected = game3;
+        Game actual = player.mostPlayerByGenre(game3.getGenre());
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPlayerByGenreIfMostHoursIsOne() {
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
-        player.play(game1, 6);
-        player.play(game2, 16);
-        player.play(game3, 16);
+        player.play(game1, 0);
+        player.play(game2, 0);
+        player.play(game3, 1);
 
-        Assertions.assertEquals(game2, player.mostPlayerByGenre(game2.getGenre()));
-    }*/
+        Game expected = game3;
+        Game actual = player.mostPlayerByGenre(game3.getGenre());
+        Assertions.assertEquals(expected, actual);
+    }
+
 
     @Test
     public void shouldPlayerByGenreIfNotFindGenre() {
@@ -151,7 +176,8 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldPlayerByGenreIfNull() {
+    public void shouldPlayerByGenreIfGenreIsNull() {
+
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);

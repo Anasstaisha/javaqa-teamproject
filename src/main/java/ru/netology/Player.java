@@ -1,7 +1,6 @@
 package ru.netology;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Player {
     private String name;
@@ -11,7 +10,9 @@ public class Player {
      * ключ - игра
      * значение - суммарное количество часов игры в эту игру
      */
-    private Map<Game, Integer> playedTime = new HashMap<>();
+
+    private Map<Game, Integer> playedTime = new LinkedHashMap<>();
+
 
     public Player(String name) {
         this.name = name;
