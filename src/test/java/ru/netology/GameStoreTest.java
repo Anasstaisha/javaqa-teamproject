@@ -78,6 +78,30 @@ public class GameStoreTest {
     }
 
     @Test
+    public void shouldChooseFirstMostTimePlayerIfSeveral() {
+        store.addPlayTime("Misha", 10);
+        store.addPlayTime("Anya", 1);
+        store.addPlayTime("Olya", 10);
+
+        String expected = "Misha";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldChooseFirstMostTimePlayerIfEqual() {
+        store.addPlayTime("Anya", 10);
+        store.addPlayTime("Misha", 10);
+        store.addPlayTime("Olya", 10);
+
+        String expected = "Anya";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldNullIfNoPlayers() {
         String expected = null;
         String actual = store.getMostPlayer();
