@@ -1,9 +1,6 @@
 package ru.netology;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameStore {
     private List<Game> games = new ArrayList<>();
@@ -13,7 +10,7 @@ public class GameStore {
      * Ключ - имя игрока
      * Значение - суммарное количество часов в игры этого каталога
      */
-    private Map<String, Integer> playedTime = new HashMap<>();
+    private Map<String, Integer> playedTime = new LinkedHashMap<>();
 
     /**
      * Создание объекта игры с заданными заголовком и жанром
