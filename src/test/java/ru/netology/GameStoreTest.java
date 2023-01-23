@@ -11,8 +11,8 @@ public class GameStoreTest {
     private GameStore store = new GameStore();
     private Game game1 = store.publishGame("Game 1", "Genre 1");
     private Game game2 = store.publishGame("Game 2", "Genre 2");
-    private Player player1 = new Player("Olya");
-    private Player player2 = new Player("Misha");
+    private Player player1 = new Player("Misha");
+    private Player player2 = new Player("Olya");
     private Player player3 = new Player("Anya");
 
 
@@ -71,6 +71,30 @@ public class GameStoreTest {
     public void shouldChooseMostTimePlayer() {
         store.addPlayTime("Misha", 0);
         store.addPlayTime("Anya", 1);
+
+        String expected = "Anya";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldChooseFirstMostTimePlayerIfSeveral() {
+        store.addPlayTime("Misha", 10);
+        store.addPlayTime("Anya", 1);
+        store.addPlayTime("Olya", 10);
+
+        String expected = "Misha";
+        String actual = store.getMostPlayer();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldChooseFirstMostTimePlayerIfEqual() {
+        store.addPlayTime("Anya", 10);
+        store.addPlayTime("Misha", 10);
+        store.addPlayTime("Olya", 10);
 
         String expected = "Anya";
         String actual = store.getMostPlayer();

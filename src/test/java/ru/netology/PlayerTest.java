@@ -85,6 +85,7 @@ public class PlayerTest {
 
         int expected = 0;
         int actual = player.sumGenre("Genre 3");
+
         assertEquals(expected, actual);
     }
 
@@ -161,6 +162,7 @@ public class PlayerTest {
         Assertions.assertEquals(expected, actual);
     }
 
+
     @Test
     public void shouldPlayerByGenreIfNotFindGenre() {
         player.installGame(game1);
@@ -175,6 +177,7 @@ public class PlayerTest {
 
     @Test
     public void shouldPlayerByGenreIfGenreIsNull() {
+
         player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
